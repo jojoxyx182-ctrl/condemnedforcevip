@@ -4,7 +4,6 @@ set -e
 
 RDP_USER="rdp"
 RDP_PASS=$(openssl rand -base64 16)
-TAILSCALE_AUTHKEY="tskey-auth-kLWkr8vsWA11CNTRL-xH3cJBoCPqH4mr1p9PyBqHupzo2NyzKtT"
 
 echo "=== Install XRDP ==="
 apt update
@@ -24,18 +23,11 @@ usermod -aG sudo "$RDP_USER"
 echo "xfce4-session" > /home/$RDP_USER/.xsession
 chown $RDP_USER:$RDP_USER /home/$RDP_USER/.xsession
 
-echo "=== Install Tailscale ==="
-curl -fsSL https://tailscale.com/install.sh | sh
-systemctl enable tailscaled
-systemctl start tailscaled
-
-tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname=vps-rdp
-
-TS_IP=$(tailscale ip -4)
+SERVER_IP=$(curl -s ifconfig.me || hostname -I | awk '{print $1}')
 
 echo "================================="
 echo "RDP READY"
-echo "IP        : $TS_IP"
+echo "IP        : $SERVER_IP"
 echo "PORT      : 3389"
 echo "USERNAME  : $RDP_USER"
 echo "PASSWORD  : $RDP_PASS"
