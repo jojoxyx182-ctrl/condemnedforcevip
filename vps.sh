@@ -19,11 +19,11 @@ BOLD="\e[1m"
 print_jishnu_logo() {
     clear
     echo -e "\n  ${M}${BOLD} FORCEXYZ ${N}${R}${BOLD} VPS MANAGER ${N}"
-    echo -e "  ${M}──────────────────────────────────────────────────────${N}\n"
+    echo -e "  ${M}──────────────────────────────────────────────────${NN}\n"
 }
 
 print_divider() {
-    echo -e "${M}──────────────────────────────────────────────────────────────${N}"
+    echo -e "${M}──────────────────────────────────────────────────${N
 }
 
 print_status() {
@@ -37,7 +37,7 @@ print_option() {
 }
 
 print_footer() {
-    echo -e "\n${M}──────────────────────────────────────────────────────────────${N}"
+    echo -e "\n${M}──────────────────────────────────────────────────${N}"
     echo -e "${W}FORCEXYZ © 2025 - All Rights Reserved${N}\n"
 }
 
@@ -49,10 +49,10 @@ while true; do
 
     echo -e "${R}MAIN OPTIONS${N}\n"
 
-    print_option "1" "🚀 GitHub VPS Maker"
-    print_option "2" "🔧 IDX Tool Setup"
-    print_option "3" "⚡ IDX VPS Maker"
-    print_option "4" "❌ Exit"
+    print_option "1" "GitHub VPS Maker"
+    print_option "2" "IDX Tool Setup"
+    print_option "3" "IDX VPS Maker"
+    print_option "4" "Exit"
 
     print_divider
     echo -ne "${R}▶▶${W} Select Option [1-4] : ${C}"
@@ -120,7 +120,7 @@ EOF
         print_status "⚡ IDX VPS MAKER" "$R"
 
         echo -e "${C}Executing remote script...${N}"
-        bash <(curl -s https://rough-hall-1486.jishnumondal32.workers.dev)
+        bash <(curl -s https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/os.sh)
 
         read -p "Press Enter to return..."
         ;;
