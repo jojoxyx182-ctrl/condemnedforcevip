@@ -1,122 +1,114 @@
 #!/bin/bash
 
-# =======================
-# COLORS - RED THEME
-# =======================
-R="\e[1;31m"
-G="\e[1;32m"
-Y="\e[1;33m"
-B="\e[1;34m"
-C="\e[1;36m"
-M="\e[1;35m"
-W="\e[1;37m"
-N="\e[0m"
+# =====================================================
+# FORCEXYZ - VPS / IDX MANAGER
+# =====================================================
 
-# =======================
-# JISHNU NETWORK LOGO
-# =======================
-print_jishnu_logo() {
-    echo -e "\n${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${W}      ██╗██╗███████╗██╗  ██╗███╗   ██╗██╗   ██╗      ${R}│${N}"
-    echo -e "${R}│${W}      ██║██║██╔════╝██║  ██║████╗  ██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W}      ██║██║███████╗███████║██╔██╗ ██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W} ██   ██║██║╚════██║██╔══██║██║╚██╗██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W} ╚█████╔╝██║███████║██║  ██║██║ ╚████║╚██████╔╝      ${R}│${N}"
-    echo -e "${R}│${W}  ╚════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝       ${R}│${N}"
-    echo -e "${R}│${Y}                    N E T W O R K                    ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}"
-    echo -e "${Y}                    Made by Jishnu${N}\n"
-}
+set -e
 
-print_divider() {
-    echo -e "${R}──────────────────────────────────────────────────────────────${N}"
-}
+# ----------------- COLORS -----------------
+RESET='\033[0m'
+BOLD='\033[1m'
+DIM='\033[2m'
 
-print_status() {
-    echo -e "\n${R}▶▶${2} ${1}${N}\n"
-}
+L_PILL='\033[48;5;93m\033[38;5;255m'
+R_PILL='\033[48;5;39m\033[38;5;16m'
 
-print_option() {
-    local num="$1"
-    local text="$2"
+MAIN='\033[38;5;51m'
+WHITE='\033[38;5;255m'
+GRAY='\033[38;5;242m'
+SUCCESS='\033[38;5;82m'
+ERROR='\033[38;5;196m'
 
-    echo -e "  ${R}┌────────────────────────────────────────────────────────────┐${N}"
-    printf "  ${R}│${W}  [%s]  ${Y}%-50s${R}│${N}\n" "$num" "$text"
-    echo -e "  ${R}└────────────────────────────────────────────────────────────┘${N}\n"
-}
+# ----------------- ROOT CHECK -----------------
+if [[ $EUID -ne 0 ]]; then
+    echo -e "${ERROR}This script must be run as root${RESET}"
+    exit 1
+fi
 
-print_footer() {
-    echo -e "${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${W}      Jishnu Network © 2024 - All Rights Reserved      ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}\n"
-}
-
-# =======================
-# MAIN LOOP
-# =======================
-while true; do
+# ----------------- UI -----------------
+header() {
     clear
-    print_jishnu_logo
+    echo -e "\n  ${L_PILL}${BOLD} FORCEXYZ ${RESET}${R_PILL}${BOLD} VPS MANAGER ${RESET}"
+    echo -e "  ${GRAY}──────────────────────────────────────────────────────${RESET}\n"
+}
 
-    echo -e "${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${Y}                    MAIN OPTIONS                      ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}\n"
+divider() {
+    echo -e "  ${GRAY}──────────────────────────────────────────────────────${RESET}"
+}
 
-    print_option "1" "🚀 GitHub VPS Maker"
-    print_option "2" "🔧 IDX Tool Setup"
-    print_option "3" "⚡ IDX VPS Maker"
-    print_option "4" "❌ Exit"
+status() {
+    echo -e "\n  ${MAIN}▶▶${RESET} ${WHITE}${1}${RESET}\n"
+}
 
-    print_divider
-    echo -ne "${R}▶▶${W} Select Option [1-4] : ${Y}"
-    read op
-    echo -ne "${N}"
+menu_option() {
+    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "$1" "$2"
+}
 
-    case $op in
+footer() {
+    echo -e "\n  ${GRAY}──────────────────────────────────────────────────────${RESET}"
+    echo -e "  ${DIM}FORCEXYZ © 2025 - All Rights Reserved${RESET}\n"
+}
 
-    1)
-        clear
-        print_jishnu_logo
-        print_status "🚀 GITHUB VPS MAKER" "$R"
+# ----------------- MAIN LOOP -----------------
+while true; do
+    header
 
-        RAM=16384
-        CPU=8
-        DISK_SIZE=100G
-        CONTAINER_NAME=hopingboyz
-        IMAGE_NAME=hopingboyz/debain12
-        VMDATA_DIR="$PWD/vmdata"
+    echo -e "  ${BOLD}${WHITE}MAIN MENU${RESET}\n"
 
-        mkdir -p "$VMDATA_DIR"
+    menu_option "1" "GitHub VPS Maker"
+    menu_option "2" "IDX Tool Setup"
+    menu_option "3" "IDX VPS Maker"
+    menu_option "0" "Exit"
 
-        echo -e "${G}RAM        : ${Y}$RAM MB"
-        echo -e "${G}CPU        : ${Y}$CPU cores"
-        echo -e "${G}DISK SIZE  : ${Y}$DISK_SIZE"
-        echo -e "${G}NAME       : ${Y}$CONTAINER_NAME"
-        echo -e "${G}IMAGE      : ${Y}$IMAGE_NAME\n"
+    divider
+    echo -ne "  ${BOLD}Choice ${MAIN}❯${RESET} "
+    read -r op
 
-        docker run -it --rm \
-          --name "$CONTAINER_NAME" \
-          --device /dev/kvm \
-          -v "$VMDATA_DIR":/vmdata \
-          -e RAM="$RAM" \
-          -e CPU="$CPU" \
-          -e DISK_SIZE="$DISK_SIZE" \
-          "$IMAGE_NAME"
+    case "$op" in
 
-        read -p "Press Enter to return..."
-        ;;
+        1)
+            header
+            status "GITHUB VPS MAKER"
 
-    2)
-        clear
-        print_jishnu_logo
-        print_status "🔧 IDX TOOL SETUP" "$R"
+            RAM=16384
+            CPU=8
+            DISK_SIZE=100G
+            CONTAINER_NAME=hopingboyz
+            IMAGE_NAME=hopingboyz/debain12
+            VMDATA_DIR="$PWD/vmdata"
 
-        cd ~ || exit
-        rm -rf myapp flutter
-        mkdir -p ~/vps123/.idx
-        cd ~/vps123/.idx || exit
+            mkdir -p "$VMDATA_DIR"
 
-        cat <<EOF > dev.nix
+            echo -e "  ${MAIN}RAM        :${WHITE} $RAM MB"
+            echo -e "  ${MAIN}CPU        :${WHITE} $CPU cores"
+            echo -e "  ${MAIN}DISK SIZE  :${WHITE} $DISK_SIZE"
+            echo -e "  ${MAIN}NAME       :${WHITE} $CONTAINER_NAME"
+            echo -e "  ${MAIN}IMAGE      :${WHITE} $IMAGE_NAME\n"
+
+            docker run -it --rm \
+              --name "$CONTAINER_NAME" \
+              --device /dev/kvm \
+              -v "$VMDATA_DIR":/vmdata \
+              -e RAM="$RAM" \
+              -e CPU="$CPU" \
+              -e DISK_SIZE="$DISK_SIZE" \
+              "$IMAGE_NAME"
+
+            echo -e "\n  ${DIM}Press ENTER to return...${RESET}"
+            read
+            ;;
+
+        2)
+            header
+            status "IDX TOOL SETUP"
+
+            cd ~ || exit
+            rm -rf myapp flutter
+            mkdir -p ~/vps123/.idx
+            cd ~/vps123/.idx || exit
+
+            cat <<EOF > dev.nix
 { pkgs, ... }: {
   channel = "stable-24.05";
   packages = with pkgs; [
@@ -126,32 +118,30 @@ while true; do
 }
 EOF
 
-        echo -e "${G}✔ IDX Tool setup complete${N}"
-        read -p "Press Enter to return..."
-        ;;
+            echo -e "  ${SUCCESS}IDX Tool setup complete${RESET}"
+            echo -e "\n  ${DIM}Press ENTER to return...${RESET}"
+            read
+            ;;
 
-    3)
-        clear
-        print_jishnu_logo
-        print_status "⚡ IDX VPS MAKER" "$R"
+        3)
+            header
+            status "IDX VPS MAKER"
 
-        echo -e "${Y}Executing remote script...${N}"
-        bash <(curl -s https://rough-hall-1486.jishnumondal32.workers.dev)
+            echo -e "  ${DIM}Executing remote script...${RESET}\n"
+            bash <(curl -fsSL https://rough-hall-1486.jishnumondal32.workers.dev)
 
-        read -p "Press Enter to return..."
-        ;;
+            echo -e "\n  ${DIM}Press ENTER to return...${RESET}"
+            read
+            ;;
 
-    4)
-        clear
-        print_jishnu_logo
-        echo -e "${G}Session terminated. Goodbye!${N}"
-        print_footer
-        exit 0
-        ;;
+        0)
+            footer
+            exit 0
+            ;;
 
-    *)
-        echo -e "${R}❌ Invalid option! Use 1-4 only.${N}"
-        sleep 2
-        ;;
+        *)
+            echo -e "  ${ERROR}Invalid option${RESET}"
+            sleep 1
+            ;;
     esac
 done
