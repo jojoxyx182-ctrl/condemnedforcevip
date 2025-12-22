@@ -4,7 +4,7 @@ set -e
 
 RDP_USER="rdp"
 RDP_PASS=$(openssl rand -base64 16)
-TAILSCALE_AUTHKEY="ISI_AUTHKEY_TAILSCALE_KAMU"
+TAILSCALE_AUTHKEY="tskey-auth-kLWkr8vsWA11CNTRL-xH3cJBoCPqH4mr1p9PyBqHupzo2NyzKtT"
 
 echo "=== Install XRDP ==="
 apt update
