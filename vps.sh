@@ -1,35 +1,35 @@
 #!/bin/bash
 
 # =======================
-# COLORS - RED THEME
+# COLORS - FORCEXYZ THEME
 # =======================
-R="\e[1;31m"
-G="\e[1;32m"
-Y="\e[1;33m"
-B="\e[1;34m"
-C="\e[1;36m"
-M="\e[1;35m"
-W="\e[1;37m"
+R="\e[38;5;51m"     # MAIN (cyan)
+G="\e[38;5;82m"     # SUCCESS
+Y="\e[38;5;255m"    # WHITE
+B="\e[38;5;39m"
+C="\e[38;5;45m"
+M="\e[38;5;93m"     # PURPLE
+W="\e[38;5;255m"
 N="\e[0m"
 
 # =======================
-# JISHNU NETWORK LOGO
+# FORCEXYZ NETWORK LOGO
 # =======================
 print_jishnu_logo() {
-    echo -e "\n${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${W}      ██╗██╗███████╗██╗  ██╗███╗   ██╗██╗   ██╗      ${R}│${N}"
-    echo -e "${R}│${W}      ██║██║██╔════╝██║  ██║████╗  ██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W}      ██║██║███████╗███████║██╔██╗ ██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W} ██   ██║██║╚════██║██╔══██║██║╚██╗██║██║   ██║      ${R}│${N}"
-    echo -e "${R}│${W} ╚█████╔╝██║███████║██║  ██║██║ ╚████║╚██████╔╝      ${R}│${N}"
-    echo -e "${R}│${W}  ╚════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝       ${R}│${N}"
-    echo -e "${R}│${Y}                    N E T W O R K                    ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}"
-    echo -e "${Y}                    Made by Jishnu${N}\n"
+    echo -e "\n${M}┌────────────────────────────────────────────────────────────┐${N}"
+    echo -e "${M}│${W}      ██╗██╗███████╗██╗  ██╗███╗   ██╗██╗   ██╗      ${M}│${N}"
+    echo -e "${M}│${W}      ██║██║██╔════╝██║  ██║████╗  ██║██║   ██║      ${M}│${N}"
+    echo -e "${M}│${W}      ██║██║███████╗███████║██╔██╗ ██║██║   ██║      ${M}│${N}"
+    echo -e "${M}│${W} ██   ██║██║╚════██║██╔══██║██║╚██╗██║██║   ██║      ${M}│${N}"
+    echo -e "${M}│${W} ╚█████╔╝██║███████║██║  ██║██║ ╚████║╚██████╔╝      ${M}│${N}"
+    echo -e "${M}│${W}  ╚════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝       ${M}│${N}"
+    echo -e "${M}│${R}                   F O R C E X Y Z                   ${M}│${N}"
+    echo -e "${M}└────────────────────────────────────────────────────────────┘${N}"
+    echo -e "${C}                    VPS MANAGER TOOL${N}\n"
 }
 
 print_divider() {
-    echo -e "${R}──────────────────────────────────────────────────────────────${N}"
+    echo -e "${M}──────────────────────────────────────────────────────────────${N}"
 }
 
 print_status() {
@@ -40,27 +40,27 @@ print_option() {
     local num="$1"
     local text="$2"
 
-    echo -e "  ${R}┌────────────────────────────────────────────────────────────┐${N}"
-    printf "  ${R}│${W}  [%s]  ${Y}%-50s${R}│${N}\n" "$num" "$text"
-    echo -e "  ${R}└────────────────────────────────────────────────────────────┘${N}\n"
+    echo -e "  ${M}┌────────────────────────────────────────────────────────────┐${N}"
+    printf "  ${M}│${W}  [%s]  ${R}%-50s${M}│${N}\n" "$num" "$text"
+    echo -e "  ${M}└────────────────────────────────────────────────────────────┘${N}\n"
 }
 
 print_footer() {
-    echo -e "${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${W}      Jishnu Network © 2024 - All Rights Reserved      ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}\n"
+    echo -e "${M}┌────────────────────────────────────────────────────────────┐${N}"
+    echo -e "${M}│${W}        FORCEXYZ © 2025 - All Rights Reserved         ${M}│${N}"
+    echo -e "${M}└────────────────────────────────────────────────────────────┘${N}\n"
 }
 
 # =======================
-# MAIN LOOP
+# MAIN LOOP (ORI)
 # =======================
 while true; do
     clear
     print_jishnu_logo
 
-    echo -e "${R}┌────────────────────────────────────────────────────────────┐${N}"
-    echo -e "${R}│${Y}                    MAIN OPTIONS                      ${R}│${N}"
-    echo -e "${R}└────────────────────────────────────────────────────────────┘${N}\n"
+    echo -e "${M}┌────────────────────────────────────────────────────────────┐${N}"
+    echo -e "${M}│${R}                    MAIN OPTIONS                      ${M}│${N}"
+    echo -e "${M}└────────────────────────────────────────────────────────────┘${N}\n"
 
     print_option "1" "🚀 GitHub VPS Maker"
     print_option "2" "🔧 IDX Tool Setup"
@@ -68,7 +68,7 @@ while true; do
     print_option "4" "❌ Exit"
 
     print_divider
-    echo -ne "${R}▶▶${W} Select Option [1-4] : ${Y}"
+    echo -ne "${R}▶▶${W} Select Option [1-4] : ${C}"
     read op
     echo -ne "${N}"
 
@@ -88,11 +88,11 @@ while true; do
 
         mkdir -p "$VMDATA_DIR"
 
-        echo -e "${G}RAM        : ${Y}$RAM MB"
-        echo -e "${G}CPU        : ${Y}$CPU cores"
-        echo -e "${G}DISK SIZE  : ${Y}$DISK_SIZE"
-        echo -e "${G}NAME       : ${Y}$CONTAINER_NAME"
-        echo -e "${G}IMAGE      : ${Y}$IMAGE_NAME\n"
+        echo -e "${G}RAM        : ${W}$RAM MB"
+        echo -e "${G}CPU        : ${W}$CPU cores"
+        echo -e "${G}DISK SIZE  : ${W}$DISK_SIZE"
+        echo -e "${G}NAME       : ${W}$CONTAINER_NAME"
+        echo -e "${G}IMAGE      : ${W}$IMAGE_NAME\n"
 
         docker run -it --rm \
           --name "$CONTAINER_NAME" \
@@ -135,7 +135,7 @@ EOF
         print_jishnu_logo
         print_status "⚡ IDX VPS MAKER" "$R"
 
-        echo -e "${Y}Executing remote script...${N}"
+        echo -e "${C}Executing remote script...${N}"
         bash <(curl -s https://rough-hall-1486.jishnumondal32.workers.dev)
 
         read -p "Press Enter to return..."
