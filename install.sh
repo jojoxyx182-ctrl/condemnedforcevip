@@ -132,11 +132,11 @@ while true; do
         1) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/panel.sh ;;
         2) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/node.sh ;;
         3) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/tema.sh ;;
-        4) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/443 ;;
+        4) run_remote bash <(curl -s https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/443) ;;
         5) show_all_info ;;
         6) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/rdp.sh ;;
         7) install_tailscale ;;
-        8) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/txt24 ;;
+        8) run_remote python3 <(curl -s https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/txt24) ;;
         9) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/uninstallwing.sh ;;
         10) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/uninstallpanel.sh ;;
         0)
