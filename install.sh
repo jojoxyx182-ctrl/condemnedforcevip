@@ -112,14 +112,14 @@ while true; do
 
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "1" "Install Pterodactyl Panel"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "2" "Install Wings (Node)"
-    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "9" "Uninstall Wings (Node)"
-    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "10" "Uninstall Pterodactyl (Node)"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "3" "Install Blueprints"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "4" "Setup IDX 24/7"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "5" "System Tools"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "6" "Install RDP"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "7" "Install Tailscale"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "8" "Stup teks"
+    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "9" "Uninstall Wings (Node)"
+    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "10" "Uninstall Pterodactyl (Node)"
 
     echo ""
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "0" "Exit"
@@ -132,7 +132,7 @@ while true; do
         1) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/panel.sh ;;
         2) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/node.sh ;;
         3) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/tema.sh ;;
-        4) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/443.sh ;;
+        4) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/443 ;;
         5) show_all_info ;;
         6) run_remote https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/rdp.sh ;;
         7) install_tailscale ;;
