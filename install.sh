@@ -99,6 +99,8 @@ while true; do
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "6" "Install RDP"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "7" "Install Tailscale"
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "8" "Stup teks"
+    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "9" "Uninstall Tools"
+    printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "10" "Cloudflare Setup"
     echo ""
     printf "  ${MAIN}${BOLD}%s${RESET}  ${WHITE}%-30s${RESET}\n" "0" "Exit"
 
@@ -115,6 +117,8 @@ while true; do
         6) bash <(curl -fsSL https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/rdp.sh) ;;
         7) install_tailscale ;;
         8) bash <(curl -fsSL https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/txt24) ;;
+        9) bash <(curl -fsSL https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/uninstallpanel.sh) ;;
+        10) bash <(curl -fsSL https://raw.githubusercontent.com/jojoxyx182-ctrl/condemnedforcevip/refs/heads/main/cloud.sh) ;;
         5) show_all_info ;;
         0) 
             echo -e "\n  ${SUCCESS}${BOLD}Thanks for using this tool! 🌟${RESET}\n"
