@@ -1,84 +1,59 @@
 #!/bin/bash
+
 set -e
 
-USER_RDP="rdp"
+RDP_USER="rdp"
 
-echo "=== Update ==="
+echo "=== Update system ==="
 apt update -y
-apt upgrade -y
 
-echo "=== Install XRDP + Openbox (MINIMAL) ==="
-apt install -y --no-install-recommends \
+echo "=== Install XRDP & Desktop ==="
+apt install -y \
   xrdp \
   xorgxrdp \
-  openbox \
-  xterm \
+  xfce4 \
+  xfce4-goodies \
   dbus-x11 \
   sudo \
   curl \
-  wget \
-  nano
+  wget
 
-echo "=== Fix XRDP Permission ==="
-adduser xrdp ssl-cert || true
-
-echo "=== Create User ==="
-if ! id "$USER_RDP" &>/dev/null; then
-  useradd -m -s /bin/bash "$USER_RDP"
-  passwd "$USER_RDP"
-  usermod -aG sudo "$USER_RDP"
-fi
-
-echo "=== Openbox Session ==="
-echo "exec openbox-session" > /home/$USER_RDP/.xsession
-chown $USER_RDP:$USER_RDP /home/$USER_RDP/.xsession
-chmod 644 /home/$USER_RDP/.xsession
-
-echo "=== Disable ALL effects ==="
-mkdir -p /home/$USER_RDP/.config/openbox
-cat > /home/$USER_RDP/.config/openbox/autostart <<'EOF'
-xset s off
-xset -dpms
-xset s noblank
-EOF
-chown -R $USER_RDP:$USER_RDP /home/$USER_RDP/.config
-
-echo "=== XRDP Ultra Low Latency ==="
-cat > /etc/xrdp/xrdp.ini <<'EOF'
-[Globals]
-port=3389
-crypt_level=low
-max_bpp=15
-bitmap_cache=false
-bitmap_compression=false
-use_fastpath=both
-tcp_nodelay=true
-tcp_keepalive=true
-
-[Xorg]
-name=Xorg
-lib=libxup.so
-username=ask
-password=ask
-ip=127.0.0.1
-port=-1
-code=20
-EOF
-
-echo "=== Install Browser (LIGHT) ==="
-apt install -y firefox-esr
-
-echo "=== Restart XRDP ==="
+echo "=== Enable XRDP ==="
 systemctl enable xrdp
 systemctl restart xrdp
 
-IP=$(curl -s ifconfig.me || hostname -I | awk '{print $1}')
+echo "=== Create RDP User ==="
+if ! id "$RDP_USER" &>/dev/null; then
+  useradd -m -s /bin/bash "$RDP_USER"
+  echo
+  echo "SET PASSWORD UNTUK USER rdp"
+  passwd "$RDP_USER"
+  usermod -aG sudo "$RDP_USER"
+fi
+
+echo "=== Set XFCE Session ==="
+echo "startxfce4" > /home/$RDP_USER/.xsessionrc
+chown $RDP_USER:$RDP_USER /home/$RDP_USER/.xsessionrc
+chmod 644 /home/$RDP_USER/.xsessionrc
+
+echo "=== Fix Permission ==="
+chown -R $RDP_USER:$RDP_USER /home/$RDP_USER
+
+echo "=== Install Browsers ==="
+apt install -y firefox chromium || apt install -y firefox-esr chromium
+
+echo "=== Open Firewall (if UFW exists) ==="
+ufw allow 3389 || true
+ufw reload || true
+
+SERVER_IP=$(curl -s ifconfig.me || hostname -I | awk '{print $1}')
 
 echo
-echo "================================"
-echo "RDP MINIMAL READY"
-echo "IP   : $IP"
-echo "PORT : 3389"
-echo "USER : $USER_RDP"
-echo "NOTE : Desktop kosong, buka browser manual"
-echo "================================"
+echo "======================================"
+echo "RDP READY"
+echo "IP       : $SERVER_IP"
+echo "PORT     : 3389"
+echo "USER     : $RDP_USER"
+echo "SESSION  : Xorg"
+echo "NOTE     : Browsing ready (Firefox & Chromium)"
+echo "======================================"
