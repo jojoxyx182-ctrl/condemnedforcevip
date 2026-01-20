@@ -1,51 +1,56 @@
 #!/bin/bash
 set -e
 
-RDP_USER="rdp"
+USER_RDP="rdp"
 
-echo "=== Update system minimal ==="
+echo "=== Update ==="
 apt update -y
 apt upgrade -y
 
-echo "=== Install XRDP + LXDE (SUPER RINGAN) ==="
+echo "=== Install XRDP + Openbox (MINIMAL) ==="
 apt install -y --no-install-recommends \
   xrdp \
   xorgxrdp \
-  lxde-core \
-  lxterminal \
   openbox \
+  xterm \
   dbus-x11 \
   sudo \
   curl \
   wget \
   nano
 
-echo "=== Enable XRDP ==="
-systemctl enable xrdp
-systemctl restart xrdp
+echo "=== Fix XRDP Permission ==="
+adduser xrdp ssl-cert || true
 
-echo "=== Create RDP User ==="
-if ! id "$RDP_USER" &>/dev/null; then
-  useradd -m -s /bin/bash "$RDP_USER"
-  echo
-  echo "SET PASSWORD UNTUK USER rdp"
-  passwd "$RDP_USER"
-  usermod -aG sudo "$RDP_USER"
+echo "=== Create User ==="
+if ! id "$USER_RDP" &>/dev/null; then
+  useradd -m -s /bin/bash "$USER_RDP"
+  passwd "$USER_RDP"
+  usermod -aG sudo "$USER_RDP"
 fi
 
-echo "=== Set LXDE Session ==="
-echo "exec startlxde" > /home/$RDP_USER/.xsession
-chown $RDP_USER:$RDP_USER /home/$RDP_USER/.xsession
-chmod 644 /home/$RDP_USER/.xsession
+echo "=== Openbox Session ==="
+echo "exec openbox-session" > /home/$USER_RDP/.xsession
+chown $USER_RDP:$USER_RDP /home/$USER_RDP/.xsession
+chmod 644 /home/$USER_RDP/.xsession
 
-echo "=== XRDP PERFORMANCE TWEAK ==="
+echo "=== Disable ALL effects ==="
+mkdir -p /home/$USER_RDP/.config/openbox
+cat > /home/$USER_RDP/.config/openbox/autostart <<'EOF'
+xset s off
+xset -dpms
+xset s noblank
+EOF
+chown -R $USER_RDP:$USER_RDP /home/$USER_RDP/.config
+
+echo "=== XRDP Ultra Low Latency ==="
 cat > /etc/xrdp/xrdp.ini <<'EOF'
 [Globals]
-bitmap_cache=true
-bitmap_compression=true
 port=3389
 crypt_level=low
-max_bpp=16
+max_bpp=15
+bitmap_cache=false
+bitmap_compression=false
 use_fastpath=both
 tcp_nodelay=true
 tcp_keepalive=true
@@ -60,45 +65,20 @@ port=-1
 code=20
 EOF
 
-echo "=== Disable Heavy Services ==="
-systemctl disable bluetooth || true
-systemctl disable cups || true
-systemctl disable cups-browsed || true
-systemctl disable avahi-daemon || true
-systemctl disable ModemManager || true
-
-echo "=== LXDE Speed Tweaks ==="
-mkdir -p /home/$RDP_USER/.config/lxsession/LXDE
-cat > /home/$RDP_USER/.config/lxsession/LXDE/autostart <<'EOF'
-@lxpanel --profile LXDE
-@pcmanfm --desktop --profile LXDE
-
-# MATIKAN SEMUA ANIMASI & EFFECT
-@xset s off
-@xset -dpms
-@xset s noblank
-EOF
-
-chown -R $RDP_USER:$RDP_USER /home/$RDP_USER/.config
-
-echo "=== Install Lightweight Browser ==="
+echo "=== Install Browser (LIGHT) ==="
 apt install -y firefox-esr
 
-echo "=== Open Firewall ==="
-ufw allow 3389 || true
-ufw reload || true
-
+echo "=== Restart XRDP ==="
+systemctl enable xrdp
 systemctl restart xrdp
 
-SERVER_IP=$(curl -s ifconfig.me || hostname -I | awk '{print $1}')
+IP=$(curl -s ifconfig.me || hostname -I | awk '{print $1}')
 
 echo
-echo "======================================"
-echo "RDP SUPER RINGAN READY 🚀"
-echo "IP       : $SERVER_IP"
-echo "PORT     : 3389"
-echo "USER     : $RDP_USER"
-echo "SESSION  : Xorg"
-echo "DESKTOP  : LXDE (Ultra Lightweight)"
-echo "RAM IDLE : ±300MB"
-echo "======================================"
+echo "================================"
+echo "RDP MINIMAL READY"
+echo "IP   : $IP"
+echo "PORT : 3389"
+echo "USER : $USER_RDP"
+echo "NOTE : Desktop kosong, buka browser manual"
+echo "================================"
